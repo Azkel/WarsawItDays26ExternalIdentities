@@ -1,0 +1,20 @@
+# Backend
+backend/bin/
+backend/obj/
+backend/*.user
+backend/appsettings.Development.json
+backend/appsettings.Local.json
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+.fake
