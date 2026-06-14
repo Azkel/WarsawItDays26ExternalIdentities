@@ -1,14 +1,33 @@
-# Entra External ID – Scopes & shared identity demo
+# Scalable cloud authentication — Microsoft Entra External Identities
 
-A small showcase project for **Microsoft Entra ID** (and **Entra External ID for Customers**) with:
+Demo code for **[Warsaw IT Days 2026](https://warszawskiedniinformatyki.pl/conference/#agenda)** (Online VoD, March 2026).
+
+| | |
+|---|---|
+| **Speaker** | Michał Smyk — Azure Cluster Lead, SoftServe Poland |
+| **Language** | Polish |
+| **Recording** | [YouTube](https://youtu.be/Aif4uk0x0vE) |
+| **All talks** | [blog.smyk.it/talks](https://blog.smyk.it/talks/) |
+
+**Title (PL):** *Skalowalne uwierzytelnianie w chmurze: Jak Microsoft Entra External Identities zastępuje samodzielne implementacje authz/authn w środowisku enterprise?*
+
+**Topics:** Azure, React, .NET, Microsoft Entra, External Identities — self-service B2B sign-up, MFA, Conditional Access, shared identity between SPA and API.
+
+> The [WID conference site](https://warszawskiedniinformatyki.pl/conference/#agenda) is not archived per year; this repo and the recording are the durable references.
+
+---
+
+## What this repo contains
+
+A small showcase for **Microsoft Entra ID** (and **Entra External ID for Customers**) with:
 
 - **React** frontend using MSAL.js (login, scopes, token for API)
 - **.NET 10** Web API (token validation, scope checks, same identity)
 
 It demonstrates:
 
-1. **Scopes** – The API defines `Things.Read` and `Things.Write`. The SPA requests these at login; the API validates them on each request.
-2. **Shared identity** – The same access token (and thus the same user: `sub`, `oid`, `name`) is used by the frontend and the backend, so the API sees the same identity as the one who signed in.
+1. **Scopes** — The API defines `Things.Read` and `Things.Write`. The SPA requests these at login; the API validates them on each request.
+2. **Shared identity** — The same access token (and thus the same user: `sub`, `oid`, `name`) is used by the frontend and the backend, so the API sees the same identity as the one who signed in.
 
 ---
 
@@ -24,8 +43,8 @@ It demonstrates:
 
 You need **two** app registrations:
 
-- **SPA (frontend)** – Single-page application that signs in users and calls the API.
-- **API (backend)** – Web API that exposes scopes and validates tokens.
+- **SPA (frontend)** — Single-page application that signs in users and calls the API.
+- **API (backend)** — Web API that exposes scopes and validates tokens.
 
 ### Option A: Azure Portal (Entra ID or External ID)
 
@@ -136,11 +155,11 @@ Frontend runs at `http://localhost:5173`. The Vite proxy forwards `/api` to the 
 
 ## 5. What to try
 
-1. **Sign in** – Use “Sign in with Microsoft Entra”. Consent to the requested scopes if prompted.
-2. **Requested API scopes** – The first card shows the scopes the SPA requested (from `.env`).
-3. **Shared identity** – Click **GET /api/things/me**. The response is the identity from the **same** access token (same `sub`/`oid`/`name`) the frontend sent. That’s the shared identity between frontend and backend.
-4. **Things.Read** – Click **GET /api/things**. This endpoint requires the `Things.Read` scope; the API validates it and returns data plus the same identity.
-5. **Things.Write** – Enter a name and click **POST /api/things**. This endpoint requires `Things.Write`; again the backend validates the token and scopes and returns the same identity.
+1. **Sign in** — Use “Sign in with Microsoft Entra”. Consent to the requested scopes if prompted.
+2. **Requested API scopes** — The first card shows the scopes the SPA requested (from `.env`).
+3. **Shared identity** — Click **GET /api/things/me**. The response is the identity from the **same** access token (same `sub`/`oid`/`name`) the frontend sent.
+4. **Things.Read** — Click **GET /api/things**. Requires the `Things.Read` scope.
+5. **Things.Write** — Enter a name and click **POST /api/things**. Requires the `Things.Write` scope.
 
 If you remove one of the API scopes from the SPA’s permission (or from the token), the corresponding call will fail with 403, illustrating scope enforcement.
 
@@ -149,7 +168,7 @@ If you remove one of the API scopes from the SPA’s permission (or from the tok
 ## Project layout
 
 ```
-├── backend/                    # .NET 9+ Web API
+├── backend/                    # .NET 10 Web API
 │   ├── Controllers/
 │   │   └── ThingsController.cs # Endpoints with [RequiredScope]
 │   ├── Program.cs              # MSAL + scope policies + CORS
